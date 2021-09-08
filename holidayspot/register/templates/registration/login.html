@@ -1,0 +1,18 @@
+{% extends 'holspot/header.html' %}
+
+<!-- {% block mystyles %}
+  <link rel="stylesheet" href="../static/css/reg.css" />
+
+{% endblock mystyles %} -->
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form method="POST" class="myform mx-auto" style="margin-top:7rem;">
+  {% csrf_token %} {{form|crispy}}
+  <p>Don't have an account?<a href="/register">Create here</a> <p>
+  <button type="submit" class="btn btn-success">Login here</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,98 @@
+{% extends 'holspot/header.html' %}
+
+{% block title %}Home {% endblock %}
+
+
+{% load static %}
+{% block mystyles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+
+{% endblock %}
+
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div id="showcase" style="height:100vh;" >
+
+  <h1 style="font-weight: bold;">Discover your best holiday spots!!!</h1>
+  <a href="#jumbo"><button class="btn btn-info">View Locations</button></a>
+
+
+</div>
+
+
+
+
+<div class="container startcard">
+  <div class="jumbotron" id="jumbo">
+    <p>Search Your Locations</p>
+    <nav class="navbar">
+      <form  method="POST">
+        {% csrf_token %}
+        {{form | crispy}}
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i> Search</button>
+      </form>
+</nav>
+
+
+  </div>
+
+
+  <h3>SEARCH RESULTS:</h3>
+  {% if location|length == 0 %}
+    <p>Not found</p>
+
+  {% endif %}
+  <div class="row text-center " style="display: flex; flex-wrap: wrap">
+    {% for instance in location %}
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="card listcard" style="width: 20rem">
+        <img
+          class="card-img-top cardimg"
+          src="{{instance.image_url}}"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{instance.city}},{{instance.state}}</h5>
+          <p class="card-text description" style="height: 210px;line-height: 30px;overflow: hidden;">{{instance.description}}</p>
+          <!-- <a href="">
+            <i class="fas fa-times-circle" style="color:red"></i>
+            Visited
+          </a>   -->
+
+
+          <p><a
+            href="{% url 'holspot:location' instance.id %}"
+            class="btn btn-primary"
+            >More Info
+            </a></p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% comment %} contact me form {% endcomment %}
+
+<h1 class="text-center">Contact Me</h1>
+
+<div class="container">
+<div class="row">
+  <div class=" mx-auto">
+    <img class="contactimg" src="{% static '/image/developer.gif'  %}" alt="dev image" />
+  </div>
+
+  <div class="col-lg-12 ">
+      <form class="contact" method="POST"  >
+          {% csrf_token %}
+    {{feedform|crispy}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  </div>
+
+  </div>
+</div>
+{% endblock content %}

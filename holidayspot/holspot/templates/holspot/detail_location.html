@@ -1,0 +1,134 @@
+{% extends 'holspot/header.html' %}
+{% load static %}
+{% block title %}
+{{foundloc.city}}
+ {% endblock %}
+
+ {% load static %}
+{% load crispy_forms_tags %}
+{% block mystyles %}
+<link rel="stylesheet" href="{% static '/css/starability-basic.css' %}" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/detail.css' %}"
+/>
+
+{% endblock mystyles %}
+
+{% block content %}
+
+
+
+<h1 class="detailheader p-5" style="margin-top: 7rem;">{{foundloc.city}}</h1>
+<div class="container card">
+  <img class="img-responsive detailimage" src="{{foundloc.image_url}}" />
+
+  <div class="card-body">
+    <h5 class="card-title">{{foundloc.city}},{{foundloc.state}}</h5>
+
+
+
+
+
+
+
+    <p class="card-text">{{foundloc.description}}</p>
+  </div>
+
+</div>
+
+<!-- https://openweathermap.org/img/w/04d.png -->
+
+<!-- temperature -->
+<div class="container">
+
+
+  <img
+    class="img-responsive"
+    style="width: 70vw; height: 35vh"
+    src="https://user-images.githubusercontent.com/3399429/55830109-8f1a9880-5b10-11e9-8efb-9fad5d2a2a92.gif"
+    alt="weather image"
+  />
+
+  <h1 class="text-center">WEATHER CONDITIONS FOR NEXT 7DAYS<br>{{foundloc.city}},{{foundloc.state}}</h1>
+
+
+  <div class="row" style="display: flex; flex-wrap: wrap;">
+    {% for day,temp in temperature.items %}
+     <div class="col-lg-4" >
+
+
+      <div class="card" style="width: 18rem;margin-top: 3rem;background-color:yellow ;">
+    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+        <div class="card-body">
+          {% if temp.1 == "Rain"%}
+            <i class="fas fa-umbrella" ></i>
+          {% elif temp.1 == "Clouds" %}
+            <i class="fas fa-cloud"></i>
+          {% else %}
+            <i class="fas fa-sun"></i>
+          {% endif %}
+
+          <h5 class="card-title">{{day}}</h5>
+          <p class="card-text">{{temp.0|floatformat:2}}°C</p>
+          <p class="card-text">{{temp.1}}</p>
+        </div>
+      </div>
+   </div>
+  {% endfor %}
+
+  </div>
+
+
+
+
+</div>
+
+<h1 class="text-center">Comment</h1>
+
+<!-- comment form -->
+<div class="container">
+  <form method="POST" class="mx-auto">
+    {% csrf_token %} {{form|crispy}}
+
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+  </form>
+</div>
+
+<div class="container">
+  <h1 class="text-center m-3">REVIEWS</h1>
+
+  <!-- list comments -->
+
+  {% if comments %}
+     {% for comment in comments%}
+      {% if comment.location == foundloc %}
+        <div class="list-group mb-5">
+          <a
+            class="
+              list-group-item list-group-item-action
+              flex-column
+              align-items-start
+            "
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{comment.author|capfirst}}</h5>
+              <p class="starability-result" data-rating="{{comment.rating}}">
+                Rated: 3 stars
+              </p>
+              <small class="text-muted">{{comment.currentdate}}</small>
+            </div>
+            <p class="mb-1">{{comment.comment}}.</p>
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+   {% else %}
+  <div class="list-group">
+    <p>Be the first to comment</p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock content %}

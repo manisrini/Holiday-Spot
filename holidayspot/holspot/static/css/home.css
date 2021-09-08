@@ -1,0 +1,49 @@
+
+
+
+
+#showcase
+{
+ background-image: url('https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80');
+  background-position:center;
+  background-size: cover;
+   display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+
+}
+
+
+
+#jumbo{
+  margin-top: 5vh;
+
+}
+
+
+.cardimg {
+  height: 300px;
+}
+
+.listcard {
+  height: 660px;
+  margin-bottom: 2rem;
+}
+
+.contact {
+  border: 2px solid aquamarine;
+  margin-right: 2vw;
+  border-radius: 12px;
+  padding : 2rem;
+  height: 480px;
+  width : 100%;
+}
+
+.contactimg {
+  margin: 4rem;
+  border-radius: 12px;
+
+}
+
